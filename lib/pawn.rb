@@ -11,6 +11,7 @@ class Pawn < Piece
     valid = valid_moves.include?(loc) || valid_captures.include?(loc)
     if valid
       @board.set_piece(self, loc)
+      @board.set_piece(nil, @location)
       @location = loc
       @first_move = false if @first_move
       true

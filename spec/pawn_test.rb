@@ -134,6 +134,7 @@ describe Pawn do
 
       expect(pawn.move([1, 0])).to eql(true)
       expect(board.get_piece([1, 0])).to eql(pawn)
+      expect(board.get_piece([0, 0])).to eql(nil)
     end
 
     it "return true on a double square move" do
@@ -142,6 +143,7 @@ describe Pawn do
 
       expect(pawn.move([2, 0])).to eql(true)
       expect(board.get_piece([2, 0])).to eql(pawn)
+      expect(board.get_piece([0, 0])).to eql(nil)
     end
 
     it "return true on a double square move black" do
@@ -150,6 +152,27 @@ describe Pawn do
 
       expect(pawn.move([5, 0])).to eql(true)
       expect(board.get_piece([5, 0])).to eql(pawn)
+      expect(board.get_piece([7, 0])).to eql(nil)
+    end
+
+    it "return false when blocked and trying to jump over" do
+      board = Board.new
+      pawn = Pawn.new(board, [0, 0], "white")
+      Pawn.new(board, [1, 0], "white")
+
+      expect(pawn.move([2, 0])).to eql(false)
+      expect(board.get_piece([0, 0])).to eql(pawn)
+      expect(board.get_piece([2, 0])).to eql(nil)
+    end
+
+    it "return true when capturing" do
+      board = Board.new
+      pawn = Pawn.new(board, [0, 0], "white")
+      Pawn.new(board, [1, 1], "black")
+
+      expect(pawn.move([1, 1])).to eql(true)
+      expect(board.get_piece([1, 1])).to eql(pawn)
+      expect(board.get_piece([0, 0])).to eql(nil)
     end
   end
 end
