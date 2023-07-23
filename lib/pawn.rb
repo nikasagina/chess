@@ -1,10 +1,13 @@
-require_relative "piece.rb"
+# frozen_string_literal: true
+
+require_relative 'piece'
 
 class Pawn < Piece
   attr_reader :first_move
+
   def initialize(board, location, color)
     super
-    @first_move = true;
+    @first_move = true
   end
 
   def move(loc)
@@ -20,7 +23,7 @@ class Pawn < Piece
   end
 
   def valid_moves
-    dir = @color == "white" ? 1 : -1
+    dir = @color == 'white' ? 1 : -1
     moves = Set.new
 
     new_pos = [@location[0] + dir, @location[1]]
@@ -35,7 +38,7 @@ class Pawn < Piece
   end
 
   def valid_captures
-    dir = @color == "white" ? 1 : -1
+    dir = @color == 'white' ? 1 : -1
     moves = Set.new
 
     if @board.aviable_attack?([@location[0] + dir, @location[1] + 1], @color)

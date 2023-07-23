@@ -1,103 +1,85 @@
-require_relative "piece.rb"
+# frozen_string_literal: true
+
+require_relative 'piece'
 
 class Queen < Piece
-  def initialize(board, location, color)
-    super
-  end
-
   def valid_moves
     moves = Set.new
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row += 1
-      if @board.aviable_location?([row, col])
-        moves.add([row, col])
-      else
-        break
-      end
+      break unless @board.aviable_location?([row, col])
+
+      moves.add([row, col])
     end
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row += 1
       col += 1
-      if @board.aviable_location?([row, col])
-        moves.add([row, col])
-      else
-        break
-      end
+      break unless @board.aviable_location?([row, col])
+
+      moves.add([row, col])
     end
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       col += 1
-      if @board.aviable_location?([row, col])
-        moves.add([row, col])
-      else
-        break
-      end
+      break unless @board.aviable_location?([row, col])
+
+      moves.add([row, col])
     end
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row -= 1
       col += 1
-      if @board.aviable_location?([row, col])
-        moves.add([row, col])
-      else
-        break
-      end
+      break unless @board.aviable_location?([row, col])
+
+      moves.add([row, col])
     end
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row -= 1
-      if @board.aviable_location?([row, col])
-        moves.add([row, col])
-      else
-        break
-      end
+      break unless @board.aviable_location?([row, col])
+
+      moves.add([row, col])
     end
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row -= 1
       col -= 1
-      if @board.aviable_location?([row, col])
-        moves.add([row, col])
-      else
-        break
-      end
+      break unless @board.aviable_location?([row, col])
+
+      moves.add([row, col])
     end
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       col -= 1
-      if @board.aviable_location?([row, col])
-        moves.add([row, col])
-      else
-        break
-      end
+      break unless @board.aviable_location?([row, col])
+
+      moves.add([row, col])
     end
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row += 1
       col -= 1
-      if @board.aviable_location?([row, col])
-        moves.add([row, col])
-      else
-        break
-      end
+      break unless @board.aviable_location?([row, col])
+
+      moves.add([row, col])
     end
 
     moves
@@ -108,69 +90,69 @@ class Queen < Piece
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row += 1
       col += 1
-      break if !@board.aviable_location?([row, col])
+      break unless @board.aviable_location?([row, col])
     end
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row += 1
       col -= 1
-      break if !@board.aviable_location?([row, col])
+      break unless @board.aviable_location?([row, col])
     end
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row -= 1
       col += 1
-      break if !@board.aviable_location?([row, col])
+      break unless @board.aviable_location?([row, col])
     end
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row -= 1
       col -= 1
-      break if !@board.aviable_location?([row, col])
+      break unless @board.aviable_location?([row, col])
     end
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       col += 1
-      break if !@board.aviable_location?([row, col])
+      break unless @board.aviable_location?([row, col])
     end
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row += 1
-      break if !@board.aviable_location?([row, col])
+      break unless @board.aviable_location?([row, col])
     end
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       col -= 1
-      break if !@board.aviable_location?([row, col])
+      break unless @board.aviable_location?([row, col])
     end
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
-    while true
+    loop do
       row -= 1
-      break if !@board.aviable_location?([row, col])
+      break unless @board.aviable_location?([row, col])
     end
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 

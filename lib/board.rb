@@ -1,9 +1,11 @@
-require_relative "pawn.rb"
-require_relative "rook.rb"
-require_relative "knight.rb"
-require_relative "bishop.rb"
-require_relative "queen.rb"
-require_relative "king.rb"
+# frozen_string_literal: true
+
+require_relative 'pawn'
+require_relative 'rook'
+require_relative 'knight'
+require_relative 'bishop'
+require_relative 'queen'
+require_relative 'king'
 require 'colorize'
 
 class Board
@@ -22,37 +24,36 @@ class Board
   end
 
   def to_s
-    str = ""
+    str = ''
     @board.reverse.each.with_index do |row, i|
       str += "#{8 - i} "
       row.each.with_index do |piece, j|
         if piece.nil?
-          if (i + j) % 2 == 0
-            str += "  ".colorize(background: :yellow)
-          else
-            str += "  ".colorize(background: :white)
-          end
+          str += if (i + j).even?
+                   '  '.colorize(background: :yellow)
+                 else
+                   '  '.colorize(background: :white)
+                 end
         else
           color = piece.color
-          if (i + j) % 2 == 0
-            str += piece.to_s.colorize(color: color, background: :yellow) + " ".colorize(background: :yellow)
-          else
-            str += piece.to_s.colorize(color: color, background: :white)  + " ".colorize(background: :white)
-          end
+          str += if (i + j).even?
+                   piece.to_s.colorize(color: color, background: :yellow) + ' '.colorize(background: :yellow)
+                 else
+                   piece.to_s.colorize(color: color, background: :white) + ' '.colorize(background: :white)
+                 end
         end
       end
       str += "\n"
     end
-    str + "  a b c d e f g h"
+    "#{str}  a b c d e f g h"
   end
-
 
   def aviable_location?(location)
     in_bounds?(location) && !is_ocupied?(location)
   end
 
   def aviable_attack?(location, color)
-    in_bounds?(location) && is_ocupied?(location)  && board[location[0]][location[1]].color != color
+    in_bounds?(location) && is_ocupied?(location) && board[location[0]][location[1]].color != color
   end
 
   def in_bounds?(location)

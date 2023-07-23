@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'set'
 
 class Piece
@@ -33,6 +35,4 @@ class Piece
   def white?
     color == 'white'
   end
-
-
 end

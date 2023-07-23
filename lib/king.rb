@@ -1,10 +1,8 @@
-require_relative "piece.rb"
+# frozen_string_literal: true
+
+require_relative 'piece'
 
 class King < Piece
-  def initialize(board, location, color)
-    super
-  end
-
   def to_s
     white? ? '♔' : '♚'
   end
