@@ -16,10 +16,6 @@ class Board
     @board[location[0]][location[1]] = piece
   end
 
-  def set_piece(piece)
-    @board[piece.location[0]][piece.location[1]] = piece
-  end
-
   def get_piece(location)
     @board[location[0]][location[1]]
   end

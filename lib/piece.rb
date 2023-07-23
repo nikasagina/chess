@@ -1,3 +1,5 @@
+require 'set'
+
 class Piece
   attr_reader :color, :board
   attr_accessor :location
@@ -6,6 +8,17 @@ class Piece
     @board = board
     @color = color
     @location = location
+    board.set_piece(self, location)
+  end
+
+  # moves the piece and returns true if it is a legal move, else returns false
+  def move(loc)
+    valid = valid_moves.include?(loc) || valid_captures.include?(loc)
+    if valid
+      @board.set_piece(self, loc)
+      @location = loc
+    end
+    valid
   end
 
   def valid_moves
