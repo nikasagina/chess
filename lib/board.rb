@@ -4,6 +4,7 @@ require_relative "knight.rb"
 require_relative "bishop.rb"
 require_relative "queen.rb"
 require_relative "king.rb"
+require 'colorize'
 
 class Board
   attr_reader :board
@@ -22,12 +23,29 @@ class Board
 
   def to_s
     str = ""
-    @board.each.with_index do |row, i|
+    @board.reverse.each.with_index do |row, i|
       str += "#{8 - i} "
-      str += row.join(" ").to_s + "\n"
+      row.each.with_index do |piece, j|
+        if piece.nil?
+          if (i + j) % 2 == 0
+            str += "  ".colorize(background: :yellow)
+          else
+            str += "  ".colorize(background: :white)
+          end
+        else
+          color = piece.color
+          if (i + j) % 2 == 0
+            str += piece.to_s.colorize(color: color, background: :yellow) + " ".colorize(background: :yellow)
+          else
+            str += piece.to_s.colorize(color: color, background: :white)  + " ".colorize(background: :white)
+          end
+        end
+      end
+      str += "\n"
     end
     str + "  a b c d e f g h"
   end
+
 
   def aviable_location?(location)
     in_bounds?(location) && !is_ocupied?(location)
