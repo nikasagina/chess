@@ -1,8 +1,30 @@
-require_relative "piece.rb"
+# frozen_string_literal: true
+
+require_relative 'piece'
 
 class Knight < Piece
-  def initialize(board, location, color)
-    super
+  DIR = [[1, 2], [2, 1], [-1, 2], [2, -1], [-1, -2], [-2, -1], [-2, 1], [1, -2]].freeze
+
+  def valid_moves
+    moves = Set.new
+
+    DIR.each do |dir|
+      loc = [@location[0] + dir[0], @location[1] + dir[1]]
+      moves.add(loc) if @board.aviable_location(loc)
+
+      moves
+    end
+  end
+
+  def valid_captures
+    moves = Set.new
+
+    DIR.each do |dir|
+      loc = [@location[0] + dir[0], @location[1] + dir[1]]
+      moves.add(loc) if @board.aviable_attack?(loc)
+
+      moves
+    end
   end
 
   def to_s
