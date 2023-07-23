@@ -6,14 +6,14 @@ class Rook < Piece
   end
 
   def valid_moves
-    moves = []
+    moves = Set.new
 
     row = @location[0]
     col = @location[1]
     while true
       row += 1
-      if @board.aviable_location?(@board[row][col])
-        moves.append([row, col])
+      if @board.aviable_location?([row, col])
+        moves.add([row, col])
       else
         break
       end
@@ -23,8 +23,8 @@ class Rook < Piece
     col = @location[1]
     while true
       row -= 1
-      if @board.aviable_location?(@board[row][col])
-        moves.append([row, col])
+      if @board.aviable_location?([row, col])
+        moves.add([row, col])
       else
         break
       end
@@ -34,8 +34,8 @@ class Rook < Piece
     col = @location[1]
     while true
       col += 1
-      if @board.aviable_location?(@board[row][col])
-        moves.append([row, col])
+      if @board.aviable_location?([row, col])
+        moves.add([row, col])
       else
         break
       end
@@ -45,8 +45,8 @@ class Rook < Piece
     col = @location[1]
     while true
       col -= 1
-      if @board.aviable_location?(@board[row][col])
-        moves.append([row, col])
+      if @board.aviable_location?([row, col])
+        moves.add([row, col])
       else
         break
       end
@@ -56,39 +56,39 @@ class Rook < Piece
   end
 
   def valid_captures
-    moves = []
+    moves = Set.new
 
     row = @location[0]
     col = @location[1]
     while true
       row += 1
-      break if !@board.aviable_location?(@board[row][col])
+      break if !@board.aviable_location?([row, col])
     end
-    moves.append([row, col]) if @board.aviable_attack?([row, col], @color)
+    moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
     while true
       row -= 1
-      break if !@board.aviable_location?(@board[row][col])
+      break if !@board.aviable_location?([row, col])
     end
-    moves.append([row, col]) if @board.aviable_attack?([row, col], @color)
+    moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
     while true
       col += 1
-      break if !@board.aviable_location?(@board[row][col])
+      break if !@board.aviable_location?([row, col])
     end
-    moves.append([row, col]) if @board.aviable_attack?([row, col], @color)
+    moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     row = @location[0]
     col = @location[1]
     while true
       col -= 1
-      break if !@board.aviable_location?(@board[row][col])
+      break if !@board.aviable_location?([row, col])
     end
-    moves.append([row, col]) if @board.aviable_attack?([row, col], @color)
+    moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     moves
   end
