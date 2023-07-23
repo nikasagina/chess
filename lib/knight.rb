@@ -10,10 +10,10 @@ class Knight < Piece
 
     DIR.each do |dir|
       loc = [@location[0] + dir[0], @location[1] + dir[1]]
-      moves.add(loc) if @board.aviable_location(loc)
-
-      moves
+      moves.add(loc) if @board.aviable_location?(loc)
     end
+
+    moves
   end
 
   def valid_captures
@@ -21,10 +21,10 @@ class Knight < Piece
 
     DIR.each do |dir|
       loc = [@location[0] + dir[0], @location[1] + dir[1]]
-      moves.add(loc) if @board.aviable_attack?(loc)
-
-      moves
+      moves.add(loc) if @board.aviable_attack?(loc, @color)
     end
+
+    moves
   end
 
   def to_s
