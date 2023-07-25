@@ -5,6 +5,12 @@ require_relative 'piece'
 class King < Piece
   DIR = [[1, 1], [1, 0], [0, 1], [-1, 1], [1, -1], [0, -1], [-1, 0], [-1, -1]].freeze
 
+  def initialize(board, location, color)
+    super
+    white? ? board.set_white_king(self) : board.set_black_king(self)
+  end
+
+
   def move(loc)
     valid = valid_moves.include?(loc) || valid_captures.include?(loc)
     if valid

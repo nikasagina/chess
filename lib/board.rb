@@ -9,7 +9,7 @@ require_relative 'king'
 require 'colorize'
 
 class Board
-  attr_reader :board
+  attr_reader :board, :white_king, :black_king
   attr_accessor :castle_aviable
 
   def initialize
@@ -17,6 +17,16 @@ class Board
     @castle_aviable = {}
     @castle_aviable['white'] = [true, true]
     @castle_aviable['black'] = [true, true]
+    @white_king = nil
+    @black_king = nil
+  end
+
+  def set_white_king(piece)
+    @white_king = piece
+  end
+
+  def set_black_king(piece)
+    @black_king = piece
   end
 
   def set_piece(piece, location)
@@ -147,5 +157,51 @@ class Board
     end
 
     false
+  end
+
+  # Returns all pieces of a given color
+  def pieces(color)
+    @board.flatten.compact.select { |piece| piece.color == color }
+  end
+
+  # Returns all pieces locations attacking a given location
+  def attacking_pieces(loc, color)
+    Set.new(@board.flatten.compact.select { |piece| piece.valid_captures.include?(loc) && piece.color != color }.map {|piece| piece.location})
+  end
+
+  def saver_pieces(color)
+    all_pieces = pieces(color)
+    king = color == 'white' ? white_king : black_king
+    pieces = Set.new
+
+    # Check if king's moves
+    king.valid_moves.empty? && king.valid_captures.empty? ? nil : pieces.add(king)
+
+    # Check if a piece can capture the attacker
+    all_pieces.each do |piece|
+      pieces.add(piece) unless (piece.valid_captures & attacking_pieces(king.location, king.color)).empty?
+    end
+
+    # Check if a piece can block the attacker
+    all_pieces.each do |piece|
+      next if piece == king
+
+      piece.valid_moves.each do |move|
+        temp_board = deep_copy
+        temp_piece = temp_board.get_piece(piece.location)
+        temp_piece.move(move)
+
+        unless temp_board.under_attack?(temp_board.get_piece(king.location).location, king.color)
+          pieces.add(piece)
+        end
+      end
+    end
+
+    pieces
+  end
+
+  # Returns a deep copy of the board
+  def deep_copy
+    Marshal.load(Marshal.dump(self))
   end
 end
