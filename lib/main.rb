@@ -14,7 +14,7 @@ class Main
       king = @current_color == 'white' ? @board.white_king : @board.black_king
       in_check = @board.under_attack?(king.location, king.color)
       if in_check && @board.saver_pieces(@current_color).empty?
-        puts "Player #{@current_color} has lost the game"
+        puts "#{@current_color} has lost the game. checkmate"
         break
       end
 
@@ -44,9 +44,8 @@ class Main
         # check if the user is allowed to castle
         rook = @board.get_piece(to)
                  rook.location[1] == 0 && king.castle(:queenside)
-          puts 'Invalid move. Please try again.'
-          next
-        end
+        puts 'Invalid move. Please try again.'
+        next
       end
 
       unless piece.move(to)
