@@ -5,13 +5,12 @@ require_relative 'piece'
 class Rook < Piece
   def initialize(board, location, color)
     super
-    if (location[0]).zero? && (location[1] = 0 || location[1] = 7)
+
+    if location[0] == 0 && (location[1] == 0 || location[1] == 7)
       @isKingside = true
-    elsif location[0] == 7 && (location[1] = 0 || location[1] = 7)
+    elsif location[0] == 7 && (location[1] == 0 || location[1] == 7)
       @isKingside = false
     else
-      board.castle_aviable['white'] = false
-      board.castle_aviable['black'] = false
     end
   end
 

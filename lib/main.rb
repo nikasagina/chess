@@ -43,8 +43,14 @@ class Main
       if @board.get_piece(from) == king && @board.get_piece(to).instance_of?(Rook) && @board.get_piece(to).color == @current_color
         # check if the user is allowed to castle
         rook = @board.get_piece(to)
-                 rook.location[1] == 0 && king.castle(:queenside)
-        puts 'Invalid move. Please try again.'
+
+        if rook.location[1] == 0 && king.castle(:queenside)
+          @current_color = @current_color == 'white' ? 'black' : 'white'
+        elsif rook.location[1] == 7 && king.castle(:kingside)
+          @current_color = @current_color == 'white' ? 'black' : 'white'
+        else
+          puts 'Invalid move. Please try again.'
+        end
         next
       end
 

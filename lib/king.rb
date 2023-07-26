@@ -60,7 +60,6 @@ class King < Piece
                                                                                                               [row,
                                                                                                                6], @color
                                                                                                             )
-
       rook_loc = [row, 7]
       new_king_loc = [row, 6]
       new_rook_loc = [row, 5]
@@ -94,12 +93,13 @@ class King < Piece
     @board.castle_aviable[@color][0] = false
     @board.castle_aviable[@color][1] = false
     @board.set_piece(self, new_king_loc)
+    @board.set_piece(nil, [row, 4])
 
     # move rook
     rook = @board.get_piece(rook_loc)
     rook.location = new_rook_loc
     @board.set_piece(rook, new_rook_loc)
-
+    @board.set_piece(nil, rook_loc)
     true
   end
 
