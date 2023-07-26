@@ -146,4 +146,59 @@ describe King do
       expect(board.get_piece([1, 1])).to eql(nil)
     end
   end
+
+  describe '#castle' do
+    it 'return false only king' do
+      board = Board.new
+      king = King.new(board, [0, 4], 'white')
+
+      expect(king.castle(:kingside)).to eql(false)
+      expect(king.castle(:queenside)).to eql(false)
+    end
+
+    it 'return false when king moved' do
+      board = Board.new
+      king = King.new(board, [0, 4], 'white')
+      king.move([0, 3])
+      king.move([0, 4])
+      Rook.new(board, [0, 0], 'white')
+
+      expect(king.castle(:kingside)).to eql(false)
+      expect(king.castle(:queenside)).to eql(false)
+    end
+
+    it 'return false when rook moved' do
+      board = Board.new
+      king = King.new(board, [0, 4], 'white')
+
+      rook = Rook.new(board, [0, 0], 'white')
+      rook.move([0, 1])
+      rook.move([0, 0])
+
+      expect(king.castle(:kingside)).to eql(false)
+      expect(board.get_piece([0, 4])).to eql(king)
+      expect(board.get_piece([0, 0])).to eql(rook)
+    end
+
+    it 'return true when caslte aviable' do
+      board = Board.new
+      king = King.new(board, [0, 4], 'white')
+      rook = Rook.new(board, [0, 0], 'white')
+
+      expect(king.castle(:queenside)).to eql(true)
+      expect(board.get_piece([0, 2])).to eql(king)
+      expect(board.get_piece([0, 3])).to eql(rook)
+    end
+
+    it 'return false when caslte is blocked' do
+      board = Board.new
+      king = King.new(board, [0, 4], 'white')
+      rook = Rook.new(board, [0, 0], 'white')
+      Queen.new(board, [7, 2], 'black')
+
+      expect(king.castle(:queenside)).to eql(false)
+      expect(board.get_piece([0, 4])).to eql(king)
+      expect(board.get_piece([0, 0])).to eql(rook)
+    end
+  end
 end

@@ -15,10 +15,8 @@ class Board
   def initialize
     @board = Array.new(8) { Array.new(8, nil) }
     @castle_aviable = {}
-    @castle_aviable['white'] = [true, true]
+    @castle_aviable['white'] = [true, true] # [kingside, queenside]
     @castle_aviable['black'] = [true, true]
-    @white_king = nil
-    @black_king = nil
   end
 
   def set_white_king(piece)
@@ -166,7 +164,9 @@ class Board
 
   # Returns all pieces locations attacking a given location
   def attacking_pieces(loc, color)
-    Set.new(@board.flatten.compact.select { |piece| piece.valid_captures.include?(loc) && piece.color != color }.map {|piece| piece.location})
+    Set.new(@board.flatten.compact.select do |piece|
+              piece.valid_captures.include?(loc) && piece.color != color
+            end.map(&:location))
   end
 
   def saver_pieces(color)
@@ -191,9 +191,7 @@ class Board
         temp_piece = temp_board.get_piece(piece.location)
         temp_piece.move(move)
 
-        unless temp_board.under_attack?(temp_board.get_piece(king.location).location, king.color)
-          pieces.add(piece)
-        end
+        pieces.add(piece) unless temp_board.under_attack?(temp_board.get_piece(king.location).location, king.color)
       end
     end
 
@@ -203,5 +201,15 @@ class Board
   # Returns a deep copy of the board
   def deep_copy
     Marshal.load(Marshal.dump(self))
+  end
+
+  def update_castle_availability(color)
+    if color == 'white'
+      @castle_aviable[color][0] = false if @board[7][7].nil? || !@board[7][7].instance_of?(Rook)
+      @castle_aviable[color][1] = false if @board[7][0].nil? || !@board[7][0].instance_of?(Rook)
+    else
+      @castle_aviable[color][0] = false if @board[0][7].nil? || !@board[0][7].instance_of?(Rook)
+      @castle_aviable[color][1] = false if @board[0][0].nil? || !@board[0][0].instance_of?(Rook)
+    end
   end
 end

@@ -20,7 +20,6 @@ class Main
 
       puts @board
       puts "It is #{@current_color}'s turn. Enter the square of the piece you want to move (e.g., 'e2'):"
-
       from = CoordsConverter.to_internal(gets.chomp)
       if from.nil?
         puts 'invalid square. Please try again'
@@ -35,8 +34,22 @@ class Main
 
       puts "Enter a square you want the piece to move (e.g., 'e2'):"
       to = CoordsConverter.to_internal(gets.chomp)
+      if to.nil?
+        puts 'invalid square. Please try again'
+        next
+      end
 
-      if !piece.move(to)
+      # check if the user wants to castle
+      if @board.get_piece(from) == king && @board.get_piece(to).instance_of?(Rook) && @board.get_piece(to).color == @current_color
+        # check if the user is allowed to castle
+        rook = @board.get_piece(to)
+                 rook.location[1] == 0 && king.castle(:queenside)
+          puts 'Invalid move. Please try again.'
+          next
+        end
+      end
+
+      unless piece.move(to)
         puts 'Invalid move. Please try again.'
         next
       end

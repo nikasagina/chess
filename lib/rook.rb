@@ -3,6 +3,35 @@
 require_relative 'piece'
 
 class Rook < Piece
+  def initialize(board, location, color)
+    super
+    if (location[0]).zero? && (location[1] = 0 || location[1] = 7)
+      @isKingside = true
+    elsif location[0] == 7 && (location[1] = 0 || location[1] = 7)
+      @isKingside = false
+    else
+      board.castle_aviable['white'] = false
+      board.castle_aviable['black'] = false
+    end
+  end
+
+  def move(loc)
+    valid = valid_moves.include?(loc) || valid_captures.include?(loc)
+    if valid
+      @board.set_piece(self, loc)
+      @board.set_piece(nil, @location)
+      @location = loc
+      unless @isKingside.nil?
+        if @isKingside
+          board.castle_aviable[@color][0] = false
+        else
+          board.castle_aviable[@color][1] = false
+        end
+      end
+    end
+    valid
+  end
+
   def valid_moves
     moves = Set.new
 

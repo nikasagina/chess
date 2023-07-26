@@ -142,7 +142,6 @@ describe Board do
     it 'return empty when checkmate' do
       board = Board.new
       king = King.new(board, [0, 0], 'white')
-      board.set_white_king(king)
 
       Queen.new(board, [1, 1], 'black')
       Queen.new(board, [2, 2], 'black')
@@ -154,7 +153,6 @@ describe Board do
     it 'return king when it can move' do
       board = Board.new
       king = King.new(board, [0, 0], 'white')
-      board.set_white_king(king)
 
       Bishop.new(board, [5, 5], 'black')
 
@@ -165,7 +163,6 @@ describe Board do
     it 'return king when it kill attacker' do
       board = Board.new
       king = King.new(board, [0, 0], 'white')
-      board.set_white_king(king)
 
       Bishop.new(board, [1, 1], 'black')
 
@@ -176,7 +173,6 @@ describe Board do
     it 'return bishop when it can block' do
       board = Board.new
       king = King.new(board, [0, 0], 'white')
-      board.set_white_king(king)
 
       Queen.new(board, [5, 5], 'black')
 
@@ -189,7 +185,6 @@ describe Board do
     it 'return bishop when it can kill attacker' do
       board = Board.new
       king = King.new(board, [0, 0], 'white')
-      board.set_white_king(king)
 
       Queen.new(board, [5, 5], 'black')
 

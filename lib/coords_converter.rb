@@ -10,7 +10,7 @@ class CoordsConverter
     5 => 'f',
     6 => 'g',
     7 => 'h'
-  }
+  }.freeze
 
   def self.to_chess_standard(location)
     return nil unless location.is_a?(Array) && location.length == 2
