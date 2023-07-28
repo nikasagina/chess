@@ -17,7 +17,7 @@ class MoveValidator
     piece = board.get_piece(from)
     king = color == 'white' ? board.white_king : board.black_king
 
-    return false if to.nil?
+    return false if to.nil? || to.eql?(from)
 
     # check if the user wants to castle
     if board.get_piece(from) == king && board.get_piece(to).instance_of?(Rook) && board.get_piece(to).color == color
@@ -31,11 +31,12 @@ class MoveValidator
 
     success = !board.under_attack?(king.location, king.color)
 
-    # move the piece back
-    board.set_piece(piece, from)
-    board.set_piece(nil, to)
-    piece.location = from
+    piece.revert_mock_move(from)
 
     success
+  end
+
+  def self.valid_move?(board, from, to, color)
+    valid_from?(board, from, color) && valid_to?(board, to, from, color)
   end
 end

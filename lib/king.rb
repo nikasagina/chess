@@ -11,15 +11,11 @@ class King < Piece
   end
 
   def move(loc)
-    valid = valid_moves.include?(loc) || valid_captures.include?(loc)
-    if valid
-      @board.set_piece(self, loc)
-      @board.set_piece(nil, @location)
-      @location = loc
-      @board.castle_aviable[@color][0] = false
-      @board.castle_aviable[@color][1] = false
-    end
-    valid
+    @board.set_piece(self, loc)
+    @board.set_piece(nil, @location)
+    @location = loc
+    @board.castle_aviable[@color][0] = false
+    @board.castle_aviable[@color][1] = false
   end
 
   def valid_moves
