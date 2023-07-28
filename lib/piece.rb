@@ -24,6 +24,17 @@ class Piece
     valid
   end
 
+  # move method might be overridden, but this method should not
+  def mock_move(loc)
+    valid = valid_moves.include?(loc) || valid_captures.include?(loc)
+    if valid
+      @board.set_piece(self, loc)
+      @board.set_piece(nil, @location)
+      @location = loc
+    end
+    valid
+  end
+
   def valid_moves
     raise NotImplementedError
   end

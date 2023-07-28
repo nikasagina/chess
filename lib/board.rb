@@ -212,4 +212,5 @@ class Board
       @castle_aviable[color][1] = false if @board[0][0].nil? || !@board[0][0].instance_of?(Rook)
     end
   end
+
 end
