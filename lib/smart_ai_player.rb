@@ -1,10 +1,8 @@
+# frozen_string_literal: true
+
 require_relative 'player'
 
 class SmartAiPlayer < Player
-  def initialize(color)
-    super(color)
-  end
-
   def next_move(board)
     pieces = board.pieces(@color)
 
@@ -15,21 +13,21 @@ class SmartAiPlayer < Player
       from = piece.location
       moves = piece.valid_moves + piece.valid_captures
       moves.each do |to|
-        if MoveValidator.valid_move?(board, from, to, @color)
-          # Make a mock move
-          piece.mock_move(to)
+        next unless MoveValidator.valid_move?(board, from, to, @color)
 
-          # Evaluate the board
-          score = evaluate_board(board)
+        # Make a mock move
+        piece.mock_move(to)
 
-          # Revert the mock move
-          piece.revert_mock_move(from)
-          
-          # If this move is better than the current best, update the best_move and best_score
-          if score > best_score
-            best_score = score
-            best_move = [from, to]
-          end
+        # Evaluate the board
+        score = evaluate_board(board)
+
+        # Revert the mock move
+        piece.revert_mock_move(from)
+
+        # If this move is better than the current best, update the best_move and best_score
+        if score > best_score
+          best_score = score
+          best_move = [from, to]
         end
       end
     end
@@ -37,7 +35,7 @@ class SmartAiPlayer < Player
     return best_move unless best_move.nil?
 
     # If no valid move is found, return a random move (should not happen in a normal game)
-    return pieces.sample.valid_moves.sample
+    pieces.sample.valid_moves.sample
   end
 
   def evaluate_board(board)
@@ -50,7 +48,6 @@ class SmartAiPlayer < Player
     pieces.each do |piece|
       our_score += piece.score
     end
-
 
     enemy_pieces.each do |piece|
       enemy_score += piece.score

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'board.rb'
-require_relative 'move_validator.rb'
+require_relative 'board'
+require_relative 'move_validator'
 
 class Player
   attr_reader :color

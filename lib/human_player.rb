@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require_relative 'player'
-require_relative 'coords_converter.rb'
+require_relative 'coords_converter'
 
 class HumanPlayer < Player
   def next_move(board)
     loop do
-      move = read_parts(board)
+      move = read_whole(board)
 
       if move.nil?
         puts 'Invalid move, please try again'
@@ -22,6 +22,8 @@ class HumanPlayer < Player
   def read_whole(board)
     puts "It is #{@color}'s turn. Enter your move (e.g., 'e2 e4'):"
     input = gets.chomp
+    return [input, nil] if input == 'save'
+
     parts = input.split(' ')
 
     return nil if parts.size != 2
@@ -31,7 +33,7 @@ class HumanPlayer < Player
 
     return nil unless MoveValidator.valid_move?(board, from, to, @color)
 
-    return [from, to]
+    [from, to]
   end
 
   def read_parts(board)
@@ -39,11 +41,10 @@ class HumanPlayer < Player
     from = CoordsConverter.to_internal(gets.chomp)
     return nil unless MoveValidator.valid_from?(board, from, @color)
 
-
     puts "Enter a square you want the piece to move (e.g., 'e2'):"
     to = CoordsConverter.to_internal(gets.chomp)
     return nil unless MoveValidator.valid_to?(board, to, from, @color)
 
-    return [from, to]
+    [from, to]
   end
 end

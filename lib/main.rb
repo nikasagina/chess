@@ -1,40 +1,44 @@
 # frozen_string_literal: true
 
-require_relative 'board_builder'
-require_relative 'human_player'
-require_relative 'ai_player'
-require_relative 'smart_ai_player'
+require_relative 'game'
 
-class Main
-  def initialize(player1, player2)
-    @board = BoardBuilder.new_board
-    @players = [player1, player2].shuffle
-  end
+puts 'Welcome to Chess!'
 
-  def run
-    loop do
-      current_player = @players.first
+loop do
+  puts 'Please choose an option:'
+  puts '1. New player vs player game'
+  puts '2. New player vs computer game'
+  puts '3. Load saved game'
+  puts "type 'save' at any point of the game to save"
+  choice = gets.chomp.to_i
 
-      if checkmate?(current_player.color)
-        puts "#{@current_player.color} has lost the game. checkmate"
-        break
-      end
-
-      puts @board
-
-      from, to = current_player.next_move(@board)
-
-      @board.get_piece(from).move(to)
-
-      @players.rotate!
+  case choice
+  when 1
+    Game.new_game(HumanPlayer.new('white'), HumanPlayer.new('black')).run
+  when 2
+    puts 'Please choose a difficulty level:'
+    puts '1. Easy'
+    puts '2. Medium'
+    level = gets.chomp.to_i
+    case level
+    when 1
+      Game.new_game(HumanPlayer.new('white'), AiPlayer.new('black')).run
+    when 2
+      Game.new_game(HumanPlayer.new('white'), SmartAiPlayer.new('black')).run
+    else
+      puts 'Invalid choice, please try again.'
     end
+  when 3
+    puts 'Please enter the ID of the saved game:'
+    id = gets.chomp.to_i
+    Game.load_game(id).run
+  else
+    puts 'Invalid choice, please try again.'
   end
 
-  def checkmate?(color)
-    king = color == 'white' ? @board.white_king : @board.black_king
-    in_check = @board.under_attack?(king.location, king.color)
-    return in_check && @board.saver_pieces(color).empty?
-  end
+  puts 'Would you like to play again? (y/n)'
+  play_again = gets.chomp.downcase
+  break unless play_again == 'y'
 end
 
-Main.new(HumanPlayer.new('white'), SmartAiPlayer.new('black')).run
+puts 'Thanks for playing Chess!'
