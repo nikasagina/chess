@@ -28,7 +28,7 @@ class Knight < Piece
   end
 
   def score
-    white? ? 320 + Piece_Square_Tables::WHITE_KNIGHT_TABLE[[@location[1], @location[0]]] : 320 + Piece_Square_Tables::BLACK_KNIGHT_TABLE[[@location[1], @location[0]]]
+    white? ? 320 + PieceSquareTables::WHITE_KNIGHT_TABLE[[@location[1], @location[0]]] : 320 + PieceSquareTables::BLACK_KNIGHT_TABLE[[@location[1], @location[0]]]
   end
 
 

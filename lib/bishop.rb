@@ -92,7 +92,7 @@ class Bishop < Piece
   end
 
   def score
-    white? ? 330 + Piece_Square_Tables::WHITE_BISHOP_TABLE[[@location[1], @location[0]]] : 330 + Piece_Square_Tables::BLACK_BISHOP_TABLE[[@location[1], @location[0]]]
+    white? ? 330 + PieceSquareTables::WHITE_BISHOP_TABLE[[@location[1], @location[0]]] : 330 + PieceSquareTables::BLACK_BISHOP_TABLE[[@location[1], @location[0]]]
   end
 
 

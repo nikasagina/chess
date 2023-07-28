@@ -1,4 +1,6 @@
-module Piece_Square_Tables
+# frozen_string_literal: true
+
+module PieceSquareTables
   WHITE_PAWN_TABLE = {
     # 1st rank values unncessary
     # 8th are b/c of #find_valid_moves
@@ -186,7 +188,7 @@ module Piece_Square_Tables
     [4, 7] => -10,
     [5, 7] => -10,
     [6, 7] => -10,
-    [7, 7] => -20,
+    [7, 7] => -20
   }.freeze
 
   BLACK_BISHOP_TABLE = {
@@ -253,7 +255,7 @@ module Piece_Square_Tables
     [4, 7] => 10,
     [5, 7] => 10,
     [6, 7] => 10,
-    [7, 7] => 20,
+    [7, 7] => 20
   }.freeze
 
   WHITE_KNIGHT_TABLE = {
@@ -320,7 +322,7 @@ module Piece_Square_Tables
     [4, 7] => -30,
     [5, 7] => -30,
     [6, 7] => -40,
-    [7, 7] => -50,
+    [7, 7] => -50
   }.freeze
 
   # subtract
@@ -388,7 +390,7 @@ module Piece_Square_Tables
     [4, 7] => -30,
     [5, 7] => -30,
     [6, 7] => -40,
-    [7, 7] => -50,
+    [7, 7] => -50
   }.freeze
 
   WHITE_ROOK_TABLE = {

@@ -112,7 +112,7 @@ class Rook < Piece
   end
 
   def score
-    white? ? 500 + Piece_Square_Tables::WHITE_ROOK_TABLE[[@location[1], @location[0]]] : 500 + Piece_Square_Tables::BLACK_ROOK_TABLE[[@location[1], @location[0]]]
+    white? ? 500 + PieceSquareTables::WHITE_ROOK_TABLE[[@location[1], @location[0]]] : 500 + PieceSquareTables::BLACK_ROOK_TABLE[[@location[1], @location[0]]]
   end
 
   def to_s

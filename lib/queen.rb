@@ -160,7 +160,7 @@ class Queen < Piece
   end
 
   def score
-    white? ? 900 + Piece_Square_Tables::WHITE_QUEEN_TABLE[[@location[1], @location[0]]] : 900 + Piece_Square_Tables::BLACK_QUEEN_TABLE[[@location[1], @location[0]]]
+    white? ? 900 + PieceSquareTables::WHITE_QUEEN_TABLE[[@location[1], @location[0]]] : 900 + PieceSquareTables::BLACK_QUEEN_TABLE[[@location[1], @location[0]]]
   end
 
   def to_s

@@ -104,7 +104,7 @@ class King < Piece
   end
 
   def score
-    white? ? 10_000 + Piece_Square_Tables::WHITE_KING_MIDDLE[[@location[1], @location[0]]] : 10_000 + Piece_Square_Tables::BLACK_KING_MIDDLE[[@location[1], @location[0]]]
+    white? ? 10_000 + PieceSquareTables::WHITE_KING_MIDDLE[[@location[1], @location[0]]] : 10_000 + PieceSquareTables::BLACK_KING_MIDDLE[[@location[1], @location[0]]]
   end
 
 

@@ -55,7 +55,7 @@ class Pawn < Piece
   end
 
   def score
-    white? ? 100 + Piece_Square_Tables::WHITE_PAWN_TABLE[[@location[1], @location[0]]] : 100 + Piece_Square_Tables::BLACK_PAWN_TABLE[[@location[1], @location[0]]]
+    white? ? 100 + PieceSquareTables::WHITE_PAWN_TABLE[[@location[1], @location[0]]] : 100 + PieceSquareTables::BLACK_PAWN_TABLE[[@location[1], @location[0]]]
   end
 
   def to_s
