@@ -11,10 +11,17 @@ class Pawn < Piece
   end
 
   def move(loc)
-    @board.set_piece(self, loc)
-    @board.set_piece(nil, @location)
-    @location = loc
-    @first_move = false if @first_move
+    valid = valid_moves.include?(loc) || valid_captures.include?(loc)
+    if valid
+      @board.set_piece(self, loc)
+      @board.set_piece(nil, @location)
+      @location = loc
+      @first_move = false if @first_move
+      if loc[0] == 7 || loc[0] == 0
+        @board.set_piece(Queen.new(@board, loc, @color), loc)
+      end
+    end
+  valid
   end
 
   def valid_moves
@@ -45,6 +52,10 @@ class Pawn < Piece
     end
 
     moves
+  end
+
+  def score
+    white? ? 100 + Piece_Square_Tables::WHITE_PAWN_TABLE[[@location[1], @location[0]]] : 100 + Piece_Square_Tables::BLACK_PAWN_TABLE[[@location[1], @location[0]]]
   end
 
   def to_s

@@ -11,11 +11,15 @@ class King < Piece
   end
 
   def move(loc)
-    @board.set_piece(self, loc)
-    @board.set_piece(nil, @location)
-    @location = loc
-    @board.castle_aviable[@color][0] = false
-    @board.castle_aviable[@color][1] = false
+    valid = valid_moves.include?(loc) || valid_captures.include?(loc)
+    if valid
+      @board.set_piece(self, loc)
+      @board.set_piece(nil, @location)
+      @location = loc
+      @board.castle_aviable[@color][0] = false
+      @board.castle_aviable[@color][1] = false
+    end
+    valid
   end
 
   def valid_moves
@@ -98,6 +102,11 @@ class King < Piece
     @board.set_piece(nil, rook_loc)
     true
   end
+
+  def score
+    white? ? 10_000 + Piece_Square_Tables::WHITE_KING_MIDDLE[[@location[1], @location[0]]] : 10_000 + Piece_Square_Tables::BLACK_KING_MIDDLE[[@location[1], @location[0]]]
+  end
+
 
   def to_s
     white? ? '♔' : '♚'

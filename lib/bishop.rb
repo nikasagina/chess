@@ -91,6 +91,11 @@ class Bishop < Piece
     moves
   end
 
+  def score
+    white? ? 330 + Piece_Square_Tables::WHITE_BISHOP_TABLE[[@location[1], @location[0]]] : 330 + Piece_Square_Tables::BLACK_BISHOP_TABLE[[@location[1], @location[0]]]
+  end
+
+
   def to_s
     white? ? '♗' : '♝'
   end

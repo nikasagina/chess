@@ -27,6 +27,11 @@ class Knight < Piece
     moves
   end
 
+  def score
+    white? ? 320 + Piece_Square_Tables::WHITE_KNIGHT_TABLE[[@location[1], @location[0]]] : 320 + Piece_Square_Tables::BLACK_KNIGHT_TABLE[[@location[1], @location[0]]]
+  end
+
+
   def to_s
     white? ? '♘' : '♞'
   end

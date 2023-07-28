@@ -15,17 +15,20 @@ class Rook < Piece
   end
 
   def move(loc)
-    @board.set_piece(self, loc)
-    @board.set_piece(nil, @location)
-    @location = loc
-    unless @isKingside.nil?
-      if @isKingside
-        board.castle_aviable[@color][0] = false
-      else
-        board.castle_aviable[@color][1] = false
+    valid = valid_moves.include?(loc) || valid_captures.include?(loc)
+    if valid
+      @board.set_piece(self, loc)
+      @board.set_piece(nil, @location)
+      @location = loc
+      unless @isKingside.nil?
+        if @isKingside
+          board.castle_aviable[@color][0] = false
+        else
+          board.castle_aviable[@color][1] = false
+        end
       end
     end
-
+    valid
   end
 
   def valid_moves
@@ -106,6 +109,10 @@ class Rook < Piece
     moves.add([row, col]) if @board.aviable_attack?([row, col], @color)
 
     moves
+  end
+
+  def score
+    white? ? 500 + Piece_Square_Tables::WHITE_ROOK_TABLE[[@location[1], @location[0]]] : 500 + Piece_Square_Tables::BLACK_ROOK_TABLE[[@location[1], @location[0]]]
   end
 
   def to_s

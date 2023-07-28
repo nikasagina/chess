@@ -159,6 +159,10 @@ class Queen < Piece
     moves
   end
 
+  def score
+    white? ? 900 + Piece_Square_Tables::WHITE_QUEEN_TABLE[[@location[1], @location[0]]] : 900 + Piece_Square_Tables::BLACK_QUEEN_TABLE[[@location[1], @location[0]]]
+  end
+
   def to_s
     white? ? '♕' : '♛'
   end

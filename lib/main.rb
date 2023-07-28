@@ -3,6 +3,7 @@
 require_relative 'board_builder'
 require_relative 'human_player'
 require_relative 'ai_player'
+require_relative 'smart_ai_player'
 
 class Main
   def initialize(player1, player2)
@@ -36,4 +37,4 @@ class Main
   end
 end
 
-Main.new(HumanPlayer.new('white'), AiPlayer.new('black')).run
+Main.new(HumanPlayer.new('white'), SmartAiPlayer.new('black')).run

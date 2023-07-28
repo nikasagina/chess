@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'set'
+require_relative 'piece_square_tables'
 
 class Piece
   attr_reader :color, :board
@@ -15,9 +16,13 @@ class Piece
 
   # moves the piece and returns true if it is a legal move, else returns false
   def move(loc)
-    @board.set_piece(self, loc)
-    @board.set_piece(nil, @location)
-    @location = loc
+    valid = valid_moves.include?(loc) || valid_captures.include?(loc)
+    if valid
+      @board.set_piece(self, loc)
+      @board.set_piece(nil, @location)
+      @location = loc
+    end
+    valid
   end
 
   # move method might be overridden, but this method should not
@@ -39,6 +44,10 @@ class Piece
   end
 
   def valid_captures
+    raise NotImplementedError
+  end
+
+  def points
     raise NotImplementedError
   end
 
